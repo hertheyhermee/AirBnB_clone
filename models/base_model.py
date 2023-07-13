@@ -18,15 +18,23 @@ class BaseModel():
     methods:
         1.save: updates the public instance attribute updated_at with the current datetime.
         2.to_dict: returns a dictionary containing all keys/values of __dict__ of the instance.
+        3. Args:
+            *args: Unused
+            **Kwargs: Key/value pairs of attributes.
     """
 
-
-
-    def __init__(self):
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = self.created_at
-
+    def __init__(self, *args, **kwargs):
+        if kwargs:
+            exclude_keys = ['__class__']
+            for key, value in kwargs.items():
+                if key not in exclude_keys:
+                    if key == 'created_at' or key == 'updated_at':
+                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
 
     def __str__(self):
         return "[{}] ({}) {}".format(
