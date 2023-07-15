@@ -23,6 +23,8 @@ class BaseModel():
             *args: Unused
             **Kwargs: Key/value pairs of attributes.
     """
+
+
     def __init__(self, *args, **kwargs):
         if kwargs:
             exclude_keys = ['__class__']
