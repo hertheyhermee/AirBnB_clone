@@ -14,7 +14,7 @@ from unittest.mock import create_autospec
 
 
 class test_console(unittest.TestCase):
-    ''' 
+    '''
         Description:
             Test the console module
     '''
@@ -27,3 +27,35 @@ class test_console(unittest.TestCase):
     def tearDown(self):
         ''''''
         sys.stdout = self.backup
+
+    def create(self):
+        '''
+            Description:
+                create an instance of the HBNBCommand class
+        '''
+        return HBNBCommand()
+
+    def test_quit(self):
+        '''
+            Description:
+                Test quit exists
+        '''
+        console = self.create()
+        self.assertTrue(console.onecmd("quit"))
+
+    def test_EOF(self):
+        '''
+            Description:
+                Test EOF exists
+        '''
+        console = self.create()
+        self.assertTrue(console.onecmd("EOF"))
+
+    def test_all(self):
+        '''
+            Description:
+                Test all exists
+        '''
+        console = self.create()
+        console.onecmd("all")
+        self.assertTrue(isinstance(self.capt_out.getvalue(), str))
