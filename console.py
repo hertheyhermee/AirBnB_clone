@@ -9,7 +9,6 @@ from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
-# from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
@@ -21,7 +20,7 @@ class HBNBCommand(cmd.Cmd):
         Contains the entry point of the command interpreter.
     '''
 
-    prompt = ("(hbnb) ")
+    prompt = "(hbnb) "
 
     def do_quit(self, args):
         '''
@@ -35,6 +34,7 @@ class HBNBCommand(cmd.Cmd):
         Description:
             Exits after receiving the EOF command.
         '''
+        print()
         return True
 
     def do_create(self, args):
@@ -43,15 +43,13 @@ class HBNBCommand(cmd.Cmd):
             Create a new instance of class BaseModel and saves it
             to the JSON file.
         '''
-        if len(args) == 0:
+        if not args:
             print("** class name missing **")
             return
         try:
-            args = shlex.split(args)
-            new_instance = eval(args[0])()
+            new_instance = eval(args)()
             new_instance.save()
             print(new_instance.id)
-
         except NameError:
             print("** class doesn't exist **")
 
@@ -62,25 +60,16 @@ class HBNBCommand(cmd.Cmd):
             the class name and id given as arguments.
         '''
         args = shlex.split(args)
-        if len(args) == 0:
+        if not args:
             print("** class name missing **")
             return
-        if len(args) == 1:
+        if len(args) < 2:
             print("** instance id missing **")
             return
-        storage = FileStorage()
-        storage.reload()
-        obj_dict = storage.all()
+        obj_dict = FileStorage().all()
         try:
-            eval(args[0])
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        key = args[0] + "." + args[1]
-        key = args[0] + "." + args[1]
-        try:
-            value = obj_dict[key]
-            print(value)
+            obj = obj_dict[args[0] + "." + args[1]]
+            print(obj)
         except KeyError:
             print("** no instance found **")
 
@@ -90,28 +79,19 @@ class HBNBCommand(cmd.Cmd):
             Deletes an instance based on class name and id.
         '''
         args = shlex.split(args)
-        if len(args) == 0:
+        if not args:
             print("** class name missing **")
             return
-        elif len(args) == 1:
+        if len(args) < 2:
             print("** instance id missing **")
             return
-        class_name = args[0]
-        class_id = args[1]
-        storage = FileStorage()
-        storage.reload()
-        obj_dict = storage.all()
+        obj_dict = FileStorage().all()
         try:
-            eval(class_name)
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        key = class_name + "." + class_id
-        try:
+            key = args[0] + "." + args[1]
             del obj_dict[key]
+            FileStorage().save()
         except KeyError:
             print("** no instance found **")
-        storage.save()
 
     def do_all(self, args):
         '''
@@ -119,63 +99,50 @@ class HBNBCommand(cmd.Cmd):
             Prints all string representation of all instances.
         '''
         obj_list = []
-        storage = FileStorage()
-        storage.reload()
-        objects = storage.all()
-        try:
-            if len(args) != 0:
-                eval(args)
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        for key, value in objects.items():
-            if len(args) != 0:
-                if type(value) is eval(args):
-                    obj_list.append(value)
-            else:
-                obj_list.append(value)
-
+        obj_dict = FileStorage().all()
+        if args:
+            try:
+                objects = obj_dict[args]
+                obj_list = [str(obj) for obj in objects.values()]
+            except KeyError:
+                print("** class doesn't exist **")
+                return
+        else:
+            obj_list = [str(obj) for obj in obj_dict.values()]
         print(obj_list)
 
     def do_update(self, args):
         '''
         Description:
-            Update an instance based on the class name and id
+            Update an instance based on the class name and id.
         '''
-        storage = FileStorage()
-        storage.reload()
         args = shlex.split(args)
-        if len(args) == 0:
+        if not args:
             print("** class name missing **")
             return
-        elif len(args) == 1:
+        if len(args) < 2:
             print("** instance id missing **")
             return
-        elif len(args) == 2:
+        if len(args) < 3:
             print("** attribute name missing **")
             return
-        elif len(args) == 3:
+        if len(args) < 4:
             print("** value missing **")
             return
+        obj_dict = FileStorage().all()
         try:
-            eval(args[0])
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        key = args[0] + "." + args[1]
-        obj_dict = storage.all()
-        try:
-            obj_value = obj_dict[key]
+            key = args[0] + "." + args[1]
+            obj = obj_dict[key]
+            attr_name = args[2]
+            attr_value = args[3]
+            if hasattr(obj, attr_name):
+                attr_value = type(getattr(obj, attr_name))(attr_value)
+                setattr(obj, attr_name, attr_value)
+                obj.save()
+            else:
+                print("** no instance found **")
         except KeyError:
             print("** no instance found **")
-            return
-        try:
-            attr_type = type(getattr(obj_value, args[2]))
-            args[3] = attr_type(args[3])
-        except AttributeError:
-            pass
-        setattr(obj_value, args[2], args[3])
-        obj_value.save()
 
     def emptyline(self):
         '''
@@ -187,25 +154,17 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         '''
         Description:
-            returns the number of instances.
+            Returns the number of instances.
         '''
-        obj_list = []
-        storage = FileStorage()
-        storage.reload()
-        objects = storage.all()
-        try:
-            if len(args) != 0:
-                eval(args)
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        for key, value in objects.items():
-            if len(args) != 0:
-                if type(value) is eval(args):
-                    obj_list.append(value)
-            else:
-                obj_list.append(value)
-        print(len(obj_list))
+        obj_dict = FileStorage().all()
+        if args:
+            try:
+                objects = obj_dict[args]
+                print(len(objects))
+            except KeyError:
+                print("** class doesn't exist **")
+        else:
+            print(len(obj_dict))
 
     def default(self, args):
         '''
@@ -213,17 +172,23 @@ class HBNBCommand(cmd.Cmd):
             Points to the required method in the dictionary based on
             the commands given as a key.
         '''
-        functions = {"all": self.do_all, "update": self.do_update,
-                     "show": self.do_show, "count": self.do_count,
-                     "destroy": self.do_destroy, "update": self.do_update}
-        args = (args.replace("(", ".").replace(")", ".")
-                .replace('"', "").replace(",", "").split("."))
+        functions = {
+            "all": self.do_all,
+            "update": self.do_update,
+            "show": self.do_show,
+            "count": self.do_count,
+            "destroy": self.do_destroy
+        }
+        args = (
+            args.replace("(", ".").replace(")", ".").replace('"', "")
+            .replace(",", "").split(".")
+        )
 
         try:
-            cmd_arg = args[0] + " " + args[2]
-            func = functions[args[1]]
+            cmd_arg = args[0] + " " + args[1]
+            func = functions[args[2]]
             func(cmd_arg)
-        except KeyError:
+        except IndexError:
             print("*** Unknown syntax:", args[0])
 
 
