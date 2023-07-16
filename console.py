@@ -177,7 +177,7 @@ class HBNBCommand(cmd.Cmd):
         setattr(obj_value, args[2], args[3])
         obj_value.save()
 
-    def do_emptyline(self):
+    def emptyline(self):
         '''
         Description:
             Do nothing when an empty line is passed.
