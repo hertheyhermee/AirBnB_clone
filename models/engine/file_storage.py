@@ -6,11 +6,11 @@ Description: This module
 from json import dump, load
 import models
 
+
 class FileStorage():
 
     __file_path = "file.json"
     __objects = {}
-
 
     def all(self):
         """Returns the dict of _objects"""
@@ -23,7 +23,8 @@ class FileStorage():
         serial_Obj = {}
         for key, value in FileStorage.__objects.items():
             serial_Obj[key] = value.to_dict()
-        with open(FileStorage.__file_path, mode="w", encoding="utf-8") as new_json:
+        with open(FileStorage.__file_path, mode="w", encoding="utf-8") as\
+                new_json:
             dump(serial_Obj, new_json)
 
     def reload(self):
