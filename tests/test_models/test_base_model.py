@@ -65,7 +65,8 @@ class TestBase(unittest.TestCase):
     def test_save(self):
         '''
             Description:
-                Checks that after updating the instance; the dates differ in the
+                Checks that after updating the instance;
+                the dates differ in the
             updated_at attribute.
         '''
         old_update = self.my_model.updated_at
