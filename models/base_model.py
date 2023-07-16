@@ -7,6 +7,7 @@ from uuid import uuid4
 from datetime import datetime
 import models
 
+
 class BaseModel():
     """
     class:
@@ -23,8 +24,6 @@ class BaseModel():
             *args: Unused
             **Kwargs: Key/value pairs of attributes.
     """
-
-
     def __init__(self, *args, **kwargs):
         if kwargs:
             exclude_keys = ['__class__']
