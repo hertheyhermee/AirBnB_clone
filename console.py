@@ -1,76 +1,65 @@
 #!/usr/bin/python3
-"""Defines the HBnB console."""
+'''
+This module contains the console for AirBnB.
+'''
 import cmd
-import models
-import shlex
 import json
-from models.base_model import BaseModel
-from models import storage
+import shlex
 from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
+# from models.user import User
+# from models.place import Place
+# from models.state import State
+# from models.city import City
+# from models.amenity import Amenity
+# from models.review import Review
+
 
 class HBNBCommand(cmd.Cmd):
-    """
+    '''
     Description:
-    AirBNB command console
+        Contains the entry point of the command interpreter.
+    '''
 
-    Attributes:
-        prompt: The command prompt.
-    """
+    prompt = ("(hbnb) ")
 
-    prompt = "(hbnb) "
-    __classes = {
-        "BaseModel",
-        "User",
-        "State",
-        "City",
-        "Place",
-        "Amenity",
-        "Review"
-    }
-
-    def quit(self, arg):
-        """
-        Description:
-        exit the program.
-        """
-        return True
-
-    def EOF(self, arg):
-        """
-        Description:
-        exit the program."""
-        print("")
-        return True
-
-    def emptyline(self):
-        """
-        Description:
-        Do nothing receiving an empty line."""
-        pass
-
-    def create(self, args):
+    def do_quit(self, args):
         '''
         Description:
-        Create a new instance of BaseModel and saves it
-        to the JSON file.
+            Quit command to exit the program.
+        '''
+        return True
+
+    def do_EOF(self, args):
+        '''
+        Description:
+            Exits after receiving the EOF command.
+        '''
+        return True
+
+    def do_create(self, args):
+        '''
+        Description:
+            Create a new instance of class BaseModel and saves it
+            to the JSON file.
         '''
         if len(args) == 0:
             print("** class name missing **")
             return
         try:
             args = shlex.split(args)
-            newInstance = eval(args[0])()
-            newInstance.save()
-            print(newInstance.id)
+            new_instance = eval(args[0])()
+            new_instance.save()
+            print(new_instance.id)
 
-        except:
+        except NameError:
             print("** class doesn't exist **")
 
-    def show(self, args):
+    def do_show(self, args):
         '''
         Description:
-        Print the string representation of an instance based on
-        the class name and id given as args.
+            Display string representation of an instance based on
+            the class name and id given as arguments.
         '''
         args = shlex.split(args)
         if len(args) == 0:
@@ -95,10 +84,10 @@ class HBNBCommand(cmd.Cmd):
         except KeyError:
             print("** no instance found **")
 
-    def destroy(self, args):
+    def do_destroy(self, args):
         '''
         Description:
-        Deletes an instance based on the class name and id.
+            Deletes an instance based on class name and id.
         '''
         args = shlex.split(args)
         if len(args) == 0:
@@ -124,11 +113,10 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
         storage.save()
 
-    def all(self, args):
+    def do_all(self, args):
         '''
         Description:
-            Prints all string representation of all instances
-            based or not on the class name.
+            Prints all string representation of all instances.
         '''
         obj_list = []
         storage = FileStorage()
@@ -149,11 +137,10 @@ class HBNBCommand(cmd.Cmd):
 
         print(obj_list)
 
-    def update(self, args):
+    def do_update(self, args):
         '''
         Description:
             Update an instance based on the class name and id
-            sent as args.
         '''
         storage = FileStorage()
         storage.reload()
@@ -190,10 +177,17 @@ class HBNBCommand(cmd.Cmd):
         setattr(obj_value, args[2], args[3])
         obj_value.save()
 
-   
-    def count(self, args):
+    def do_emptyline(self):
         '''
-            Counts/retrieves the number of instances.
+        Description:
+            Do nothing when an empty line is passed.
+        '''
+        pass
+
+    def do_count(self, args):
+        '''
+        Description:
+            returns the number of instances.
         '''
         obj_list = []
         storage = FileStorage()
@@ -216,11 +210,12 @@ class HBNBCommand(cmd.Cmd):
     def default(self, args):
         '''
         Description:
-            Catches all the function names that are not expicitly defined.
+            Points to the required method in the dictionary based on
+            the commands given as a key.
         '''
-        functions = {"all": self.all, "update": self.update,
-                     "show": self.show, "count": self.count,
-                     "destroy": self.destroy, "update": self.update}
+        functions = {"all": self.do_all, "update": self.do_update,
+                     "show": self.do_show, "count": self.do_count,
+                     "destroy": self.do_destroy, "update": self.do_update}
         args = (args.replace("(", ".").replace(")", ".")
                 .replace('"', "").replace(",", "").split("."))
 
@@ -228,7 +223,7 @@ class HBNBCommand(cmd.Cmd):
             cmd_arg = args[0] + " " + args[2]
             func = functions[args[1]]
             func(cmd_arg)
-        except:
+        except KeyError:
             print("*** Unknown syntax:", args[0])
 
 
