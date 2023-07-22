@@ -1,0 +1,1 @@
+<h1>Air BnB web static</h1>

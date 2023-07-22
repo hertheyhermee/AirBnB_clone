@@ -1,0 +1,12 @@
+header {
+    background: white;
+    height: 70px;
+    vertical-align: middle;
+    width: 100%;
+    border-bottom: 1px solid #cccccc;
+}
+
+header img {
+    vertical-align: middle;
+    margin-left: 20px;
+}
