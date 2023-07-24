@@ -6,7 +6,7 @@ header {
     border-bottom: 1px solid #cccccc;
 }
 
-header img {
+header .logo {
     vertical-align: middle;
     margin-left: 20px;
 }
