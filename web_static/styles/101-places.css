@@ -123,37 +123,3 @@ article .reviews ul li h3 {
 article .reviews ul li p {
     font-size: 12px;
 }
-
-@media (max-width: 767px) {
-    .filters {
-        width: 85%;
-        height: 50px;
-        margin: auto;
-        border-radius: 30px;
-        /* flex-wrap: wrap; */
-    }
-
-    .locations,
-    .filters .amenities {
-        height: 100%;
-        width: 25%;
-        padding-left: 15px;
-    }
-
-    .locations h4,
-    .filters .amenities h4 {
-        display: none;
-    }
-
-    .filters button {
-        font-size: 15px;
-        right: 0;
-        border-radius: 0 30px 30px;
-    }
-
-    .locations:hover .popover,
-    .filters .amenities:hover .popover {
-        display: none;
-    }
-
-}
