@@ -1,0 +1,159 @@
+.places {
+    text-align: center;
+    margin: 10px;
+}
+
+.places h1 {
+    margin-left: 10px;
+    text-align: left;
+    font-size: 30px;
+}
+
+.article-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.places article {
+    position: relative;
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ff5a5f;
+}
+
+.places article h2 {
+    text-align: center;
+    margin: -1px 0 50px;
+    font-size: 30px;
+
+}
+
+.price_by_night {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border: 4px solid #ff5a5f;
+    border-radius: 50%;
+    min-width: 60px;
+    height: 60px;
+}
+
+.information {
+    height: 80px;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    display: flex;
+    justify-content: center;
+}
+
+.max_guest,
+.number_rooms,
+.number_bathrooms {
+    width: 100px;
+}
+
+.max_guest p,
+.number_rooms p,
+.number_bathrooms p {
+    margin-top: -5px;
+}
+
+.max_guest .material-symbols-outlined,
+.number_rooms .material-symbols-outlined,
+.number_bathrooms .material-symbols-outlined {
+    margin-top: 20px;
+}
+
+.user p span {
+    font-weight: bold;
+}
+
+.user p,
+.description p {
+    text-align: left;
+}
+
+article .amenities,
+article .reviews {
+    margin-top: 40px;
+}
+
+article .amenities .material-symbols-outlined {
+    margin-right: 15px;
+    margin-top: 9px;
+}
+
+article .amenities h2,
+article .reviews h2 {
+    text-align: left;
+    font-size: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dddddd;
+}
+
+article .amenities ul,
+article .reviews ul {
+    margin: 0;
+    padding: 0;
+    margin-top: -20px;
+}
+
+article .amenities ul li {
+    list-style-type: none;
+    text-align: left;
+    display: flex;
+}
+
+article .reviews ul li {
+    list-style-type: none;
+    text-align: left;
+}
+
+article .reviews ul li h3 {
+    font-size: 14px;
+    margin-bottom: -10px;
+}
+
+article .reviews ul li p {
+    font-size: 12px;
+}
+
+@media (max-width: 767px) {
+    .filters {
+        width: 85%;
+        height: 50px;
+        margin: auto;
+        border-radius: 30px;
+        /* flex-wrap: wrap; */
+    }
+
+    .locations,
+    .filters .amenities {
+        height: 100%;
+        width: 25%;
+        padding-left: 15px;
+    }
+
+    .locations h4,
+    .filters .amenities h4 {
+        display: none;
+    }
+
+    .filters button {
+        font-size: 15px;
+        right: 0;
+        border-radius: 0 30px 30px;
+    }
+
+    .locations:hover .popover,
+    .filters .amenities:hover .popover {
+        display: none;
+    }
+
+}
