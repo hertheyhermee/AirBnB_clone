@@ -1,18 +1,18 @@
 .locations,
-.amenities {
+.filters .amenities {
     height: 100%;
     width: 25%;
     padding-left: 40px;
 }
 
 .locations h3,
-.amenities h3 {
+.filters .amenities h3 {
     font-weight: 600;
     margin-bottom: -20px;
 }
 
 .locations h4,
-.amenities h4 {
+.filters .amenities h4 {
     font-weight: 400;
 }
 
@@ -69,10 +69,10 @@
 }
 
 .locations:hover .popover,
-.amenities:hover .popover {
+.filters .amenities:hover .popover {
     display: block;
 }
 
-.amenities .popover {
+.filters .amenities .popover {
     padding-top: 35px;
 }

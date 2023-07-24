@@ -58,6 +58,12 @@
     width: 100px;
 }
 
+.max_guest .material-symbols-outlined,
+.number_rooms .material-symbols-outlined,
+.number_bathrooms .material-symbols-outlined {
+    margin-top: 20px;
+}
+
 .max_guest p,
 .number_rooms p,
 .number_bathrooms p {
