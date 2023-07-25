@@ -2,11 +2,15 @@ header {
     background: white;
     height: 70px;
     vertical-align: middle;
+    display: flex;
+    align-items: center;
     width: 100%;
     border-bottom: 1px solid #cccccc;
 }
 
 header .logo {
-    vertical-align: middle;
+    background: url('../images/logo.png') no-repeat;
+    height: inherit;
+    width: 150px;
     margin-left: 20px;
 }

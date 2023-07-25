@@ -56,18 +56,28 @@
 .number_rooms,
 .number_bathrooms {
     width: 100px;
+    margin: 10px 0;
 }
 
-.max_guest .material-symbols-outlined,
-.number_rooms .material-symbols-outlined,
-.number_bathrooms .material-symbols-outlined {
-    margin-top: 20px;
+.max_guest .guests {
+    height: 40px;
+    background: url("../images/icon_group.png") no-repeat center;
+}
+
+.number_rooms .room {
+    height: 40px;
+    background: url("../images/icon_bed.png") no-repeat center;
+}
+
+.number_bathrooms .bath {
+    height: 40px;
+    background: url("../images/icon_bath.png") no-repeat center;
 }
 
 .max_guest p,
 .number_rooms p,
 .number_bathrooms p {
-    margin-top: -5px;
+    margin-top: 5px;
 }
 
 .user p span {
@@ -83,9 +93,29 @@ article .reviews {
     margin-top: 40px;
 }
 
-article .amenities .material-symbols-outlined {
+.tv {
+    background: url("../images/icon_tv.png") no-repeat center;
+    height: 50px;
+    width: 40px;
     margin-right: 15px;
-    margin-top: 9px;
+}
+
+.wifi {
+    background: url("../images/icon_wifi.png") no-repeat center;
+    height: 50px;
+    width: 40px;
+    margin-right: 15px;
+}
+
+.pets {
+    background: url("../images/icon_pets.png") no-repeat center;
+    height: 50px;
+    width: 40px;
+    margin-right: 15px;
+}
+
+article .amenities ul li p {
+    margin-top: 20px;
 }
 
 article .amenities h2,
